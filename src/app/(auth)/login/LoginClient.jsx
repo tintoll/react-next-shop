@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import styles from "./Auth.module.scss";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/loader/Loader";
 
 const LoginClient = () => {
   const [email, setemail] = useState("");
@@ -27,21 +28,26 @@ const LoginClient = () => {
   const signInWithGoogle = () => {};
 
   return (
-    <section className={styles.page}>
-      <div className={styles.container}>
-        <h1 className={styles.logo}>
-          <Image src={LogoPath} alt="logo" property />
-        </h1>
-        <form onSubmit={loginUser} className={styles.form}>
-          {/* Input */}
-          <div className={styles.group}>{/* 자동 로그인, 비밀번호 수정*/}</div>
-          <div className={styles.buttonGroup}>
-            {/* Button */}
-            <div>{/* Button */}</div>
-          </div>
-        </form>
-      </div>
-    </section>
+    <>
+      <Loader />
+      <section className={styles.page}>
+        <div className={styles.container}>
+          <h1 className={styles.logo}>
+            <Image src={LogoPath} alt="logo" property />
+          </h1>
+          <form onSubmit={loginUser} className={styles.form}>
+            {/* Input */}
+            <div className={styles.group}>
+              {/* 자동 로그인, 비밀번호 수정*/}
+            </div>
+            <div className={styles.buttonGroup}>
+              {/* Button */}
+              <div>{/* Button */}</div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </>
   );
 };
 
