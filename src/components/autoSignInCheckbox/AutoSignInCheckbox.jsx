@@ -9,7 +9,7 @@ const AutoSignInCheckbox = ({
   disabled,
   onChange,
   orientation = "top",
-  message = "개인 정보 보호를 위해 본인 기기에서만 이용해 주십시오.",
+  message = "개인 정보 보호를 위해 본인 기기에서만 이용해주세요",
   ...restProps
 }) => {
   return (
@@ -21,7 +21,14 @@ const AutoSignInCheckbox = ({
         onChange={onChange}
         {...restProps}
       />
-      {checked && <Tooltip />}
+      {checked && (
+        <Tooltip
+          left={-5}
+          top={24}
+          orientation={orientation}
+          message={message}
+        />
+      )}
     </div>
   );
 };
