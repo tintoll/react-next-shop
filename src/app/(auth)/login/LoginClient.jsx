@@ -30,7 +30,7 @@ const LoginClient = () => {
 
   return (
     <>
-      <Loader />
+      {isLoading && <Loader />}
       <section className={styles.page}>
         <div className={styles.container}>
           <h1 className={styles.logo}>
