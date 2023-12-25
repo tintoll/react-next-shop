@@ -50,6 +50,7 @@ const LoginClient = () => {
               label="이메일"
               placeholder="아이디(이메일)"
               className={styles.control}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
@@ -60,6 +61,7 @@ const LoginClient = () => {
               label="비밀번호"
               placeholder="비밀번호"
               className={styles.control}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className={styles.group}>
@@ -69,6 +71,24 @@ const LoginClient = () => {
                   setIsAutoLogin(e.target.checked);
                 }}
               />
+
+              <Link href={"/reset"} className={styles.findLink}>
+                비밀번호 수정하기
+                <svg
+                  width="11"
+                  height="18"
+                  viewBox="0 0 11 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={styles.findLinkArrow}
+                >
+                  <path
+                    d="M1.5 1L9.5 9L1.5 17"
+                    stroke="#0074E9"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </Link>
             </div>
             <div className={styles.buttonGroup}>
               <Button type="submit" width="100%">
