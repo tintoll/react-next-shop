@@ -5,10 +5,12 @@ import InnerHeader from "../innerHeader/InnerHeader";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import styles from "./Header.module.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const isLoggedIn = true;
   const [displayName, setDisplayName] = useState("");
