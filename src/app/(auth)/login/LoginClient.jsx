@@ -13,11 +13,17 @@ import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "@/firebase/firebase";
 
 const LoginClient = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAutoLogin, setIsAutoLogin] = useState(false);
 
   const router = useRouter();
@@ -28,12 +34,29 @@ const LoginClient = () => {
 
   const loginUser = (e) => {
     e.preventDefault();
-
-    setisLoading(true);
+    setIsLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setIsLoading(false);
+        toast.info("로그인에 성공하였습니다.");
+        redirectUser();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error(error.message);
+      });
   };
 
   const signInWithGoogle = () => {
-    toast.info("성공");
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(() => {
+        toast.info("로그인에 성공하였습니다.");
+        redirectUser();
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
