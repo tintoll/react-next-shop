@@ -6,14 +6,26 @@ import Heading from "@/components/heading/Heading";
 import Input from "@/components/Input/Input";
 import Button from "@/components/button/Button";
 import Link from "next/link";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "@/firebase/firebase";
+import { toast } from "react-toastify";
 
 const ResetClient = () => {
   const [email, setEmail] = useState("");
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetPassword = (e) => {
-    e.preventDetault();
-    setisLoading(true);
+    e.preventDefault();
+    setIsLoading(true);
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setIsLoading(false);
+        toast.info("비밀번호 업데이트를 위한 이메일을 보냈습니다. ");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error(error.message);
+      });
   };
 
   return (
@@ -28,10 +40,11 @@ const ResetClient = () => {
             />
             <form onSubmit={resetPassword}>
               <Input
-                type="submit"
+                type="text"
                 placeholder="Email"
                 required
                 value={email}
+                name="email"
                 className={styles.control}
                 onChange={(e) => setEmail(e.target.value)}
               />
