@@ -27,7 +27,7 @@ const LoginClient = () => {
   };
 
   const loginUser = (e) => {
-    e.preventDetault();
+    e.preventDefault();
 
     setisLoading(true);
   };

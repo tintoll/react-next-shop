@@ -11,6 +11,9 @@ import React, { useState } from "react";
 import LogoPath from "@/assets/colorful.svg";
 
 import styles from "../login/Auth.module.scss";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebase";
 
 const RegisterCient = () => {
   const [email, setEmail] = useState("");
@@ -21,8 +24,24 @@ const RegisterCient = () => {
   const router = useRouter();
 
   const registerUser = (e) => {
-    e.preventDetault();
+    e.preventDefault();
+    if (password !== cPassword) {
+      return toast.error("비밀번호가 일치하지 않습니다.");
+    }
     setisLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+
+        setisLoading(false);
+        toast.success("사용자가 등록되었습니다.");
+        router.push("/login");
+      })
+      .catch((error) => {
+        setisLoading(false);
+        toast.error(error.message);
+      });
   };
 
   return (
