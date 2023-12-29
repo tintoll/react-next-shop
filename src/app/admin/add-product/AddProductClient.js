@@ -5,6 +5,10 @@ import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "./AddProduct.module.scss";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { db, storage } from "@/firebase/firebase";
+import { toast } from "react-toastify";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 
 export const categories = [
   { id: 1, name: "Laptop" },
@@ -42,11 +46,58 @@ const AddProductClient = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (e) => {};
+  const handleImageChange = (e) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+
+    const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        toast.error(error.message);
+      },
+      () => {
+        // 업로드 완료되면 downloadURL 받아와서 저장 정보에 넣어주기
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProduct({ ...product, imageURL: downloadURL });
+          toast.success("이미지를 성공적으로 업로드 했습니다.");
+        });
+      }
+    );
+  };
 
   const addProduct = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    try {
+      addDoc(collection(db, "products"), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: Timestamp.now().toDate(),
+      });
+
+      setIsLoading(false);
+      setUploadProgress(0);
+      setProduct({ ...initialState });
+
+      toast.success("상품을 저장했습니다.");
+      router.push("/admin/all-products");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(getErrorMessage(error));
+    }
   };
 
   return (
