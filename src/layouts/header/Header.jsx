@@ -24,7 +24,6 @@ const Header = () => {
     // 구글로그인하면 displayName이 이있지만 email/password 방식으 없다.
     // 그래서 아래 로직에서 만들어준다.
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         if (user.displayName === null) {
           const u1 = user.email.substring(0, user.email.indexOf("@"));
