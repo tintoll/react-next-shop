@@ -7,6 +7,14 @@ import rocketBadgeIcon from "@/assets/badge-rocket.svg";
 import { Rating } from "react-simple-star-rating";
 
 const ProductItem = ({ id, name, price, imageURL }) => {
+  // API 호출이 많으면 제한이 걸려서 주석
+  // const { documents } = useFetchDocuments('reviews', ["productID", "==", id])
+  // let productRating = 0;
+  // documents.map(doc => {
+  //   productRating = productRating + doc.rate;
+  // })
+  // const rating = productRating / documents.length;
+
   const shotenText = (text, n) => {
     if (text.length > n) {
       return text.subsring(0, n).concat("...");
@@ -28,8 +36,16 @@ const ProductItem = ({ id, name, price, imageURL }) => {
               원 <Image src={rocketBadgeIcon} alt="로켓배송" />
             </em>
             <div className={styles.rating}>
-              <Rating size={17} readonly initialValue={1} />
-              <span className={styles.ratingCount}>(1)</span>
+              <Rating
+                size={17}
+                readonly
+                initialValue={1}
+                // initialValue={Number.isNaN(rating) ? 0 : rating}
+              />
+              <span className={styles.ratingCount}>
+                (1)
+                {/* ({documents.length}) */}
+              </span>
             </div>
           </div>
         </div>
