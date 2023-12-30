@@ -16,10 +16,10 @@ const ProductList = () => {
   }, [dispatch, sort]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(10);
+  const [productsPerPage, setProductsPerPage] = useState(1);
 
-  const indexOfLastProduct = currentPage * productPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
@@ -74,8 +74,8 @@ const ProductList = () => {
         </div>
         <div className={styles.limit}>
           <select
-            value={productPerPage}
-            onChange={(e) => setProductPerPage(Number(e.target.value))}
+            value={productsPerPage}
+            onChange={(e) => setProductsPerPage(Number(e.target.value))}
           >
             <option value={10}>10개씩 보기</option>
             <option value={20}>20개씩 보기</option>
@@ -101,7 +101,7 @@ const ProductList = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalProducts={filteredProducts.length}
-        productPerPage={productPerPage}
+        productsPerPage={productsPerPage}
       />
     </div>
   );
