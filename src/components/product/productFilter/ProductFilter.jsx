@@ -13,7 +13,7 @@ import Button from "@/components/button/Button";
 const ProductFilter = () => {
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
-  const [price, setPrice] = useState(10000);
+  const [price, setPrice] = useState(100000);
 
   const dispatch = useDispatch();
 
