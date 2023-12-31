@@ -1,6 +1,6 @@
 import { db } from "@/firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const useFetchDocument = (collectionName, documentID) => {
@@ -20,6 +20,10 @@ const useFetchDocument = (collectionName, documentID) => {
       toast.error("Document not found");
     }
   }, [collectionName, documentID]);
+
+  useEffect(() => {
+    getDocument();
+  }, [getDocument]);
 
   return { document };
 };
