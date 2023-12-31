@@ -1,7 +1,8 @@
 import React from "react";
+import ProductDetailClient from "./ProductDetailClient";
 
 const ProductDetails = () => {
-  return <div>ProductDetails</div>;
+  return <ProductDetailClient />;
 };
 
 export default ProductDetails;
