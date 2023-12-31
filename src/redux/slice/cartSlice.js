@@ -115,6 +115,7 @@ export const {
   REMOVE_FROM_CART,
   DECREASE_CART,
   CALCULATE_SUBTOTAL,
+  SAVE_URL,
 } = cartSlice.actions;
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
