@@ -53,10 +53,69 @@ const cartSlice = createSlice({
 
       state.cartTotalQuantity = totalQuantity;
     },
+    CALCULATE_SUBTOTAL: (state) => {
+      const array = [];
+
+      state.cartItems.map((item) => {
+        const { price, cartQuantity } = item;
+
+        const cartItemAmount = price * cartQuantity;
+        return array.push(cartItemAmount);
+      });
+
+      const totalAmount = array.reduce((a, b) => {
+        return a + b;
+      }, 0);
+
+      state.cartTotalAmount = totalAmount;
+    },
+    SAVE_URL: (state, action) => {
+      state.previousURL = action.payload;
+    },
+    DECREASE_CART: (state, action) => {
+      const productIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+
+      if (state.cartItems[productIndex].cartQuantity > 1) {
+        state.cartItems[productIndex].cartQuantity -= 1;
+        toast.success(`${action.payload.name} 개수 -1`);
+      } else if (state.cartItems[productIndex].cartQuantity === 1) {
+        const newCartItem = state.cartItems.filter(
+          (item) => item.id !== action.payload.id
+        );
+        state.cartItems = newCartItem;
+        toast.success(`${action.payload.name}이 장바구니에서 삭제되었습니다.`);
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
+    REMOVE_FROM_CART: (state, action) => {
+      const newCartItem = state.cartItems.filter(
+        (item) => item.id !== action.payload.id
+      );
+
+      state.cartItems = newCartItem;
+      toast.success(`${action.payload.name}이 장바구니에서 삭제되었습니다.`);
+
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
+    CLEAR_CART: (state) => {
+      state.cartItems = [];
+      toast.success("장바구니가 비었습니다.");
+
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
   },
 });
 
-export const { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } = cartSlice.actions;
+export const {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+  CLEAR_CART,
+  REMOVE_FROM_CART,
+  DECREASE_CART,
+  CALCULATE_SUBTOTAL,
+} = cartSlice.actions;
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
 export const selectCartTotalAmount = (state) => state.cart.cartTotalAmount;
