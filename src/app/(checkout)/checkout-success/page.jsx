@@ -11,6 +11,7 @@ import styles from "./CheckoutSuccess.module.scss";
 const CheckoutSuccess = async ({ searchParams }) => {
   const secretKey = process.env.NEXT_PUBLIC_TOSS_SECRET_KEY;
 
+  // 주문 조회 API 호출 하기
   const url = `https://api.tosspayments.com/v1/payments/orders/${searchParams.orderId}`;
   const basicToken = Buffer.from(`${secretKey}:`, "utf-8").toString("base64");
 
