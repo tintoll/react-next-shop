@@ -16,6 +16,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import priceFormat from "@/utils/priceFormat";
+import Notiflix from "notiflix";
+import { deleteDoc, doc } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
+import { toast } from "react-toastify";
+import { db, storage } from "@/firebase/firebase";
 
 const AllProductsClient = () => {
   const [search, setSearch] = useState("");
@@ -49,7 +54,38 @@ const AllProductsClient = () => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
   }, [dispatch, products, search]);
 
-  const confirmDelete = () => {};
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      "상품 삭제하기",
+      "이 상품을 삭제하게 됩니다.",
+      "삭제",
+      "취소",
+      function okCb() {
+        deleteProduct(id, imageURL);
+      },
+      function cancelCb() {
+        console.log("삭제가 취소되었습니다.");
+      },
+      {
+        width: "320px",
+        borderRadius: "3px",
+        titleColor: "#4385F4",
+        okButtonBackground: "#4385F4",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
+  const deleteProduct = async (id, imageURL) => {
+    try {
+      await deleteDoc(doc(db, "products", id));
+
+      const storageRef = ref(storage, imageURL);
+      await deleteObject(storageRef);
+      toast.success("상품을 성공적으로 삭제했습니다.");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
