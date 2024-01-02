@@ -54,7 +54,7 @@ const AllProductsClient = () => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
   }, [dispatch, products, search]);
 
-  const confirmDelete = (id, imageURL) => {
+  const confirmDelete = (id: string, imageURL: string) => {
     Notiflix.Confirm.show(
       "상품 삭제하기",
       "이 상품을 삭제하게 됩니다.",
@@ -75,7 +75,7 @@ const AllProductsClient = () => {
       }
     );
   };
-  const deleteProduct = async (id, imageURL) => {
+  const deleteProduct = async (id: string, imageURL: string) => {
     try {
       await deleteDoc(doc(db, "products", id));
 
@@ -83,7 +83,7 @@ const AllProductsClient = () => {
       await deleteObject(storageRef);
       toast.success("상품을 성공적으로 삭제했습니다.");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 

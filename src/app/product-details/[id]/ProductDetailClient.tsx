@@ -18,12 +18,12 @@ import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from "@/redux/slice/cartSlice";
 const ProductDetailClient = () => {
   const { id } = useParams();
 
-  const { document: product } = useFetchDocument("products", id);
+  const { document: product } = useFetchDocument("products", String(id));
 
   const { documents: reviews } = useFetchDocuments("reviews", [
     "productID",
     "==",
-    id,
+    String(id),
   ]);
   const [count, setCount] = useState(1);
 

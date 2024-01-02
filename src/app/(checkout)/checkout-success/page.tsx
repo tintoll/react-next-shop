@@ -6,9 +6,25 @@ import Link from "next/link";
 import React from "react";
 import styles from "./CheckoutSuccess.module.scss";
 
+interface ICheckoutSuccessProps {
+  searchParams: {
+    orderId: string;
+  };
+}
+
+interface IPayment {
+  orderName: string;
+  orderId: string;
+  approvedAt: string;
+  card: {
+    number: number;
+    amount: number;
+  };
+}
+
 // useParams() 사용안하고 params를 속성으로 바로 가져올수 있다.
 // 페이지 컴포넌트에도 async가 되는구나?
-const CheckoutSuccess = async ({ searchParams }) => {
+const CheckoutSuccess = async ({ searchParams }: ICheckoutSuccessProps) => {
   const secretKey = process.env.NEXT_PUBLIC_TOSS_SECRET_KEY;
 
   // 주문 조회 API 호출 하기

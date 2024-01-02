@@ -40,6 +40,8 @@ const ResetClient = () => {
             />
             <form onSubmit={resetPassword}>
               <Input
+                id="reset"
+                label="reset"
                 type="text"
                 placeholder="Email"
                 required

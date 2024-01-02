@@ -3,7 +3,7 @@ import Button from "@/components/button/Button";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./AddProduct.module.scss";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "@/firebase/firebase";
@@ -41,12 +41,12 @@ const AddProductClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
 
@@ -73,7 +73,7 @@ const AddProductClient = () => {
     );
   };
 
-  const addProduct = (e) => {
+  const addProduct = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 

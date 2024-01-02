@@ -8,13 +8,14 @@ import Button from "@/components/button/Button";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import priceFormat from "@/utils/priceFormat";
+import { ICartItem } from "@/types";
 
 const OrderDetailsClient = () => {
   const { id } = useParams();
-  const { document: order } = useFetchDocument("orders", id);
+  const { document: order } = useFetchDocument("orders", String(id));
 
   const router = useRouter();
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     router.push(`/review-product/${id}`);
   };
   return (
@@ -46,7 +47,7 @@ const OrderDetailsClient = () => {
                 </tr>
               </thead>
               <tbody>
-                {order.cartItems.map((cartItem, index) => {
+                {order.cartItems.map((cartItem: ICartItem, index: number) => {
                   const { id, name, price, imageURL, cartQuantity } = cartItem;
                   return (
                     <tr key={id}>

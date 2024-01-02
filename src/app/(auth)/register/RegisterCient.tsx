@@ -50,7 +50,7 @@ const RegisterCient = () => {
       <section className={styles.page}>
         <div className={styles.container}>
           <h1 className={styles.logo}>
-            <Image src={LogoPath} alt="logo" property />
+            <Image src={LogoPath} alt="logo" priority />
           </h1>
           <form onSubmit={registerUser} className={styles.form}>
             <Input

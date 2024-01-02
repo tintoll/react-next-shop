@@ -22,7 +22,7 @@ const OrdersClient = () => {
     dispatch(STORE_ORDERS(data));
   }, [dispatch, data]);
 
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     router.push(`/admin/order-details/${id}`);
   };
 

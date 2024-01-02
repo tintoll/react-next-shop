@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 // @가 src 폴더를 의미한다.
 import LogoPath from "@/assets/colorful.svg";
 import Image from "next/image";
@@ -32,7 +32,7 @@ const LoginClient = () => {
     router.push("/");
   };
 
-  const loginUser = (e) => {
+  const loginUser = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
@@ -65,7 +65,7 @@ const LoginClient = () => {
       <section className={styles.page}>
         <div className={styles.container}>
           <h1 className={styles.logo}>
-            <Image src={LogoPath} alt="logo" property />
+            <Image src={LogoPath} alt="logo" priority />
           </h1>
           <form onSubmit={loginUser} className={styles.form}>
             {/* Input */}

@@ -9,7 +9,7 @@ import { selectUserID, selectUserName } from "@/redux/slice/authSlice";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
@@ -25,8 +25,8 @@ const ReviewProductClient = () => {
   const userID = useSelector(selectUserID);
   const userName = useSelector(selectUserName);
 
-  const { document: product } = useFetchDocument("products", id);
-  const submitReview = async (e) => {
+  const { document: product } = useFetchDocument("products", String(id));
+  const submitReview = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const today = new Date();
@@ -46,7 +46,7 @@ const ReviewProductClient = () => {
       await addDoc(collection(db, "reviews"), reviewData);
       router.push(`/product-details/${id}`);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 

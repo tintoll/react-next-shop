@@ -8,9 +8,10 @@ import Loader from "@/components/loader/Loader";
 import Image from "next/image";
 import ChangeOrderStatus from "@/components/changeOrderStatus/ChangeOrderStatus";
 import priceFormat from "@/utils/priceFormat";
+import { ICartItem, IOrder } from "@/types";
 const OrderDetailsClient = () => {
   const { id } = useParams();
-  const { document: order } = useFetchDocument("orders", id);
+  const { document: order } = useFetchDocument("orders", String(id));
 
   return (
     <section className={styles.table}>
@@ -45,7 +46,7 @@ const OrderDetailsClient = () => {
               </tr>
             </thead>
             <tbody>
-              {order.cartItems.map((cartItem, index) => {
+              {order.cartItems.map((cartItem: ICartItem, index: number) => {
                 const { id, name, price, imageURL, cartQuantity } = cartItem;
                 return (
                   <tr key={id}>
@@ -69,7 +70,7 @@ const OrderDetailsClient = () => {
               })}
             </tbody>
           </table>
-          <ChangeOrderStatus order={order} id={id} />
+          <ChangeOrderStatus order={order as IOrder} id={String(id)} />
         </>
       )}
     </section>

@@ -2,25 +2,11 @@ import React, { ChangeEvent } from "react";
 import styles from "./Loader.module.scss";
 import { RotatingLines } from "react-loader-spinner";
 
-interface IInputProps {
-  id: string;
-  label: string;
-  name?: string;
-  labelVisible?: boolean;
-  icon?: "letter" | "lock" | "show" | "hide";
-  email?: boolean;
-  password?: boolean;
-  placeholder?: string;
-  readonly?: boolean;
-  disabled?: boolean;
-  value?: string;
-  error?: { message: string };
-  className?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  [x: string]: any;
+interface ILoaderProps {
+  basic?: boolean;
 }
 
-const Loader = ({ basic }: IInputProps) => {
+const Loader = ({ basic }: ILoaderProps) => {
   if (basic) {
     return (
       <div className={styles.basicWrapper}>
